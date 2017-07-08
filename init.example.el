@@ -63,6 +63,7 @@
        electric-indent ; smarter, keyword-based electric-indent
        eshell          ; a consistent, cross-platform shell (WIP)
        gist            ; interacting with github gists
+       impatient-mode  ; show off code over HTTP
       ;macos           ; MacOS-specific commands
        neotree         ; a project drawer, like NERDTree for vim
        password-store  ; password manager for nerds
@@ -90,7 +91,6 @@
        lua             ; one-based indices? one-based indices
        markdown        ; writing docs for people to ignore
        ocaml           ; an objective camel
-       org             ; for organized fearless leader (WIP)
        php             ; make php less awful to work with
        purescript      ; javascript, but functional
        python          ; beautiful is better than ugly
@@ -103,12 +103,22 @@
        typescript      ; javascript, but better
        web             ; the tubes
 
+       :org
+       org             ; organize your plain life in plain text
+       org-babel       ; executable code snippets in org-mode
+      ;org-attach      ; FIXME my own, simpler attachment system
+       org-capture     ; a better org-capture, in or outside of Emacs
+       org-export      ; a custom, centralized export system
+       org-notebook    ; org-mode as a notebook
+       org-present     ; using org-mode for presentations
+      ;org-sync        ; TODO sync with mobile
+      ;org-publish     ; TODO org + blogs
+
        ;; Applications are complex and opinionated modules that transform Emacs
        ;; toward a specific purpose. They should be loaded last.
        :app
        email           ; Emacs as an email client
        irc             ; how neckbeards socialize
-       present         ; showing off presentations in emacs
        rss             ; emacs as an RSS reader
        twitter         ; twitter client https://twitter.com/vnought
        write           ; emacs as a word processor (latex + org + markdown)

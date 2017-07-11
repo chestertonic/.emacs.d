@@ -12,7 +12,15 @@
   :post-init
   (defun +slinkee|init-irony-mode ()
     (when (file-directory-p irony-server-install-prefix)
-      (irony-mode +1)))
-  (add-hook! '(c++-mode-hook c-mode-hook objc-mode-hook) #'+slinkee|init-irony-mode) nil
+        (irony-mode +1)))
+  (add-hook! '(c++-mode-hook c-mode-hook objc-mode-hook) #'+slinkee|init-irony-mode) nil)
+
+(def-package-hook! irony
   :post-config
+  (require 'irony-cdb)
   (add-hook! 'irony-mode-hook #'irony-cdb-autosetup-compile-options) t)
+
+(setq doom-font (font-spec :family "Consolas for Powerline" :size 12)
+      doom-variable-pitch-font (font-spec :family "Noto Sans" :size 12)
+      doom-unicode-font (font-spec :family "DejaVu Sans Mono" :size 12))
+

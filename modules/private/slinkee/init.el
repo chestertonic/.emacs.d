@@ -1,4 +1,4 @@
-;;; private/slinkee/init.el -*- lexical-binding: t; -*-
+;;; private/hlissner/init.el -*- lexical-binding: t; -*-
 
 (setq user-mail-address "chestertonic@gmail.com"
       user-full-name "Chester Tonic")
@@ -20,7 +20,10 @@
   (require 'irony-cdb)
   (add-hook! 'irony-mode-hook #'irony-cdb-autosetup-compile-options) t)
 
-(setq doom-font (font-spec :family "Consolas for Powerline" :size 12)
-      doom-variable-pitch-font (font-spec :family "Noto Sans" :size 12)
-      doom-unicode-font (font-spec :family "DejaVu Sans Mono" :size 12))
+(def-package! meson-mode
+  :init
+  (add-hook 'meson-mode-hook #'company-mode))
 
+(setq doom-font (font-spec :family "Consolas for Powerline" :size 13)
+      doom-variable-pitch-font (font-spec :family "Noto Sans" :size 13)
+      doom-unicode-font (font-spec :family "DejaVu Sans Mono" :size 13))

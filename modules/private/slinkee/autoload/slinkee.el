@@ -1,6 +1,14 @@
 ;;; private/slinkee/autoload/slinkee.el -*- lexical-binding: t; -*-
 
 ;;;###autoload
+(defun +slinkee/install-snippets ()
+  "Install my snippets from https://github.com/slinkee/emacs-snippets into
+private/slinkee/snippets."
+  (interactive)
+  (doom-fetch :github "slinkee/emacs-snippets"
+              (expand-file-name "snippets" (doom-module-path :private 'slinkee))))
+
+;;;###autoload
 (defun +slinkee/yank-buffer-filename ()
   "Copy the current buffer's path to the kill ring."
   (interactive)
@@ -24,6 +32,14 @@
 ;;;###autoload (autoload '+slinkee/browse-templates "private/slinkee/autoload/slinkee" nil t)
 (+slinkee-def-finder! templates +file-templates-dir)
 
+;;;###autoload (autoload '+slinkee/find-in-snippets "private/slinkee/autoload/slinkee" nil t)
+;;;###autoload (autoload '+slinkee/browse-snippets "private/slinkee/autoload/slinkee" nil t)
+(+slinkee-def-finder! snippets +slinkee-snippets-dir)
+
 ;;;###autoload (autoload '+slinkee/find-in-emacsd "private/slinkee/autoload/slinkee" nil t)
 ;;;###autoload (autoload '+slinkee/browse-emacsd "private/slinkee/autoload/slinkee" nil t)
 (+slinkee-def-finder! emacsd doom-emacs-dir)
+
+;;;###autoload (autoload '+slinkee/find-in-notes "private/slinkee/autoload/slinkee" nil t)
+;;;###autoload (autoload '+slinkee/browse-notes "private/slinkee/autoload/slinkee" nil t)
+(+slinkee-def-finder! notes +org-dir)

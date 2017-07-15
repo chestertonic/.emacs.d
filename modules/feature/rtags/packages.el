@@ -4,8 +4,8 @@
 (package! rtags)
 ;; Ivy-rtags may not be for navigation...we'll have
 ;; to see. Let's start with just getting rtags set.
-;;(when (featurep! :completion ivy)
-;;  (package! ivy-rtags))
+(when (featurep! :completion ivy)
+ (package! ivy-rtags))
 ;; Irony is set up for completion and syntax checking
 ;; As far as I know irony is the better choice for
 ;; completion/syntax-checking but lacks navigation.

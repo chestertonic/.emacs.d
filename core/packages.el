@@ -17,8 +17,9 @@
 (package! fringe-helper)
 (package! highlight-indentation)
 (package! highlight-numbers)
-(package! nlinum)
-(package! nlinum-hl)
+(unless (boundp 'display-line-numbers)
+  (package! nlinum)
+  (package! nlinum-hl))
 (package! rainbow-delimiters)
 (package! vi-tilde-fringe)
 (package! visual-fill-column)
@@ -27,18 +28,19 @@
 (package! shackle)
 
 ;; core-editor.el
-(package! editorconfig)
-(package! smartparens)
 (package! ace-link)
 (package! ace-window)
 (package! avy)
 (package! command-log-mode)
+(package! editorconfig)
 (package! expand-region)
 (package! help-fns+)
 (package! imenu-anywhere)
 (package! imenu-list)
 (package! pcre2el)
 (package! smart-forward)
+(package! smartparens)
+(package! undo-tree)
 (package! wgrep)
 
 ;; core-projects.el

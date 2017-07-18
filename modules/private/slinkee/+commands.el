@@ -55,7 +55,7 @@
 (ex! "k[ill]o"     #'doom/kill-other-buffers)
 (ex! "l[ast]"      #'doom/popup-restore)
 (ex! "m[sg]"       #'view-echo-area-messages)
-(ex! "pop[up]"     #'doom/popup) ; open current buffer in popup
+(ex! "pop[up]"     #'doom/popup-this-buffer) ; open current buffer in popup
 
 ;; Project navigation
 (ex! "a"           #'projectile-find-other-file)

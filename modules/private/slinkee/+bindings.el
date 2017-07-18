@@ -70,6 +70,9 @@
  :m "A-j" #'+slinkee:multi-next-line
  :m "A-k" #'+slinkee:multi-previous-line
 
+ (:prefix "C-x"
+   "p" #'doom/other-popup)
+
 
  ;; --- <leader> -------------------------------------
  (:leader
@@ -262,7 +265,6 @@
      :desc "Find snippet"          :n  "S" #'+slinkee/find-in-snippets)
 
    (:desc "toggle" :prefix "t"
-     :desc "Flyspell"               :n "s" #'flyspell-mode
      :desc "Flycheck"               :n "f" #'flycheck-mode
      :desc "Line numbers"           :n "l" #'doom/toggle-line-numbers
      :desc "Fullscreen"             :n "f" #'doom/toggle-fullscreen
@@ -274,35 +276,40 @@
 
    (:after rtags
      (:desc "rtags" :prefix "j"
-       :desc "Goto symbol" :n "." #'rtags-find-symbol-at-point
-       :desc "Goto reference" :n "," #'rtags-find-references-at-point
-       :desc "Goto virtual" :n "v" #'rtags-find-virtuals-at-point
-       :desc "Show enum value" :n "V" #'rtags-print-enum-value-at-point
-       :desc "Find all references" :n "/" #'rtags-find-all-references-at-point
-       :desc "Cylcle overlays" :n "Y" #'rtags-cycle-overlays-on-screen
-       :desc "Find symbol" :n ">" #'rtags-find-symbol
-       :desc "Find references" :n "<" #'rtags-find-references
-       :desc "Goto previous location" :n "[" #'rtags-location-stack-back
-       :desc "Goto next location" :n "]" #'rtags-location-stack-forward
-       :desc "Diagnostics" :n "D" #'rtags-diagnostics
-       :desc "Guess function" :n "G" #'rtags-guess-function-at-point
-       :desc "Set current project" :n "p" #'rtags-set-current-project
-       :desc "Show dependencies" :n "P" #'rtags-print-dependencies
-       :desc "Reparse file" :n "e" #'rtags-reparse-file
-       :desc "Preprocess file" :n "E" #'rtags-preprocess-file
-       :desc "Rename symbol" :n "R" #'rtags-rename-symbol
-       :desc "Show symbol info" :n "M" #'rtags-symbol-info
-       :desc "Show summary" :n "S" #'rtags-display-summary
-       :desc "Goto offset" :n "O" #'rtags-goto-offset
-       :desc "Find file" :n ";" #'rtags-find-file
-       :desc "Show fixits" :n "F" #'rtags-fixit
+       :desc "Goto symbol"                    :n "." #'rtags-find-symbol-at-point
+       :desc "Goto reference"                 :n "," #'rtags-find-references-at-point
+       :desc "Goto virtual"                   :n "v" #'rtags-find-virtuals-at-point
+       :desc "Show enum value"                :n "V" #'rtags-print-enum-value-at-point
+       :desc "Find all references"            :n "/" #'rtags-find-all-references-at-point
+       :desc "Cylcle overlays"                :n "Y" #'rtags-cycle-overlays-on-screen
+       :desc "Find symbol"                    :n ">" #'rtags-find-symbol
+       :desc "Find references"                :n "<" #'rtags-find-references
+       :desc "Goto previous location"         :n "[" #'rtags-location-stack-back
+       :desc "Goto next location"             :n "]" #'rtags-location-stack-forward
+       :desc "Diagnostics"                    :n "D" #'rtags-diagnostics
+       :desc "Compile file"                   :n "C" #'rtags-compile-file
+       :desc "Guess function"                 :n "G" #'rtags-guess-function-at-point
+       :desc "Set current project"            :n "p" #'rtags-dependency-tree
+       :desc "Show dependencies"              :n "P" #'rtags-dependency-tree-all
+       :desc "Reparse file"                   :n "e" #'rtags-reparse-file
+       :desc "Preprocess file"                :n "E" #'rtags-preprocess-file
+       :desc "Rename symbol"                  :n "R" #'rtags-rename-symbol
+       :desc "Show symbol info"               :n "M" #'rtags-symbol-info
+       :desc "Show summary"                   :n "S" #'rtags-display-summary
+       :desc "Goto offset"                    :n "O" #'rtags-goto-offset
+       :desc "Find file"                      :n ";" #'rtags-find-file
+       :desc "Show fixits"                    :n "F" #'rtags-fixit
        :desc "Copy and show current location" :n "L" #'rtags-copy-and-print-current-location
-       :desc "Apply fixit" :n "X" #'rtags-fix-fixit-at-point
-       :desc "Show buffer" :n "B" #'rtags-show-rtags-buffer
-       :desc "Imenu" :n "I" #'rtags-imenu
-       :desc "Show taglist" :n "T" #'rtags-taglist
-       :desc "Show class hierarchy" :n "h" #'rtags-print-class-hierarchy
-       :desc "Show source arguments" :n "a" #'rtags-print-source-arguments)))
+       :desc "Apply fixit"                    :n "X" #'rtags-fix-fixit-at-point
+       :desc "Show buffer"                    :n "B" #'rtags-show-rtags-buffer
+       :desc "Make member"                    :n "K" #'rtags-make-member
+       :desc "Imenu"                          :n "I" #'rtags-imenu
+       :desc "Show taglist"                   :n "T" #'rtags-taglist
+       :desc "Show class hierarchy"           :n "h" #'rtags-print-class-hierarchy
+       :desc "Show source arguments"          :n "a" #'rtags-print-source-arguments
+       :desc "Find called functions"          :n "A" #'rtags-find-functions-called-by-this-function
+       :desc "List results"                   :n "l" #'rtags-list-results
+       :desc "Visualize location stack"       :n "Z" #'rtags-location-stack-visualize)))
 
 
  ;; --- Personal vim-esque bindings ------------------
@@ -456,7 +463,11 @@
    ;; Binding to switch to evil-easymotion/avy after a snipe
    :map evil-snipe-parent-transient-map
    "C-;" (λ! (require 'evil-easymotion)
-             (call-interactively +evil--snipe-repeat-fn)))
+             (call-interactively
+              (evilem-create #'evil-snipe-repeat
+                             :bind ((evil-snipe-scope 'whole-buffer)
+                                    (evil-snipe-enable-highlight)
+                                    (evil-snipe-enable-incremental-highlight))))))
 
  ;; evil-surround
  :v  "S"  #'evil-surround-region
@@ -617,6 +628,7 @@
    ;; For elisp debugging
    :map debugger-mode-map
    :n "RET" #'debug-help-follow
+   :n "e"   #'debugger-eval-expression
    :n "n"   #'debugger-step-through
    :n "c"   #'debugger-continue)
 
@@ -737,7 +749,9 @@
 
       (:after org-mode
         (:map org-mode-map
-          :i [remap doom/inflate-space-maybe] #'org-self-insert-command))
+          :i [remap doom/inflate-space-maybe] #'org-self-insert-command
+          :i "C-e" #'org-end-of-line
+          :i "C-a" #'org-beginning-of-line))
 
       ;; Make ESC quit all the things
       (:map (minibuffer-local-map
